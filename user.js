@@ -64,21 +64,13 @@ user_pref("network.predictor.enabled", false);
 user_pref("network.predictor.enable-prefetch", false);
 
 /** EXPERIMENTAL ***/
-user_pref("layout.css.grid-template-masonry-value.enabled", true);
+// user_pref("layout.css.grid-template-masonry-value.enabled", true);
 
 /****************************************************************************
  * SECTION: SECUREFOX                                                       *
  ****************************************************************************/
 /** TRACKING PROTECTION ***/
 user_pref("browser.contentblocking.category", "strict");
-user_pref(
-  "urlclassifier.trackingSkipURLs",
-  "*.reddit.com, *.twitter.com, *.twimg.com, *.tiktok.com"
-);
-user_pref(
-  "urlclassifier.features.socialtracking.skipURLs",
-  "*.instagram.com, *.twitter.com, *.twimg.com"
-);
 user_pref("browser.download.start_downloads_in_tmp_dir", true);
 user_pref("browser.helperApps.deleteTempFileOnExit", true);
 user_pref("browser.uitour.enabled", false);
@@ -86,7 +78,6 @@ user_pref("privacy.globalprivacycontrol.enabled", true);
 
 /** OCSP & CERTS / HPKP ***/
 user_pref("security.OCSP.enabled", 0);
-user_pref("security.remote_settings.crlite_filters.enabled", true);
 user_pref("security.pki.crlite_mode", 2);
 
 /** SSL / TLS ***/
@@ -111,12 +102,7 @@ user_pref("browser.search.suggest.enabled", false);
 user_pref("browser.urlbar.quicksuggest.enabled", false);
 user_pref("browser.urlbar.groupLabels.enabled", false);
 user_pref("browser.formfill.enable", false);
-user_pref("security.insecure_connection_text.enabled", true);
-user_pref("security.insecure_connection_text.pbmode.enabled", true);
 user_pref("network.IDN_show_punycode", true);
-
-/** HTTPS-FIRST POLICY ***/
-user_pref("dom.security.https_first", true);
 
 /** PASSWORDS ***/
 user_pref("signon.formlessCapture.enabled", false);
@@ -138,11 +124,13 @@ user_pref("network.http.referer.XOriginTrimmingPolicy", 2);
 user_pref("privacy.userContext.ui.enabled", true);
 
 /** SAFE BROWSING ***/
-user_pref("browser.safebrowsing.downloads.remote.enabled", false);
+// user_pref("browser.safebrowsing.downloads.remote.enabled", false);
 
 /** MOZILLA ***/
 user_pref("permissions.default.desktop-notification", 2);
 user_pref("permissions.default.geo", 2);
+user_pref("geo.provider.use_geoclue", true); // def=false // NOTE: only allow Firefox to infer your location if `geo.provider.network.url` is a privacy-focus platform
+user_pref("geo.provider.network.url", "https://beacondb.net/v1/geolocate"); // def=Mozilla's // NOTE: https://github.com/yokoffing/Betterfox/issues/378
 user_pref("browser.search.update", false);
 user_pref("permissions.manager.defaultsUrl", "");
 
@@ -218,10 +206,9 @@ user_pref("full-screen-api.warning.timeout", 0);
 user_pref("browser.urlbar.suggest.calculator", true);
 user_pref("browser.urlbar.unitConversion.enabled", true);
 user_pref("browser.urlbar.trending.featureGate", false);
+user_pref("dom.text_fragments.create_text_fragment.enabled", true);
 
 /** NEW TAB PAGE ***/
-user_pref("browser.newtabpage.activity-stream.feeds.topsites", false);
-user_pref("browser.newtabpage.activity-stream.showWeather", false);
 user_pref("browser.newtabpage.activity-stream.feeds.section.topstories", false);
 
 /** POCKET ***/
@@ -277,7 +264,7 @@ user_pref("image.cache.size", 10485760); // def=5242880 // NOTE: increase image 
 
 //user_pref("gfx.canvas.accelerated.cache-size", 4096); // def=256 // NOTE: GPU-accelerated Canvas2D. Higher values will use more memory in exchange for performance
 //user_pref("gfx.content.skia-font-cache-size", 80); // def = 5 // NOTE: GPU-accelerated Canvas2D. Higher values will use more memory in exchange for performance
-user_pref("gfx.webrender.all", true); // def=false // TODO: add short description
+user_pref("gfx.webrender.all", true); // def=false // disable hardware acceleration // TODO: test if the error message is gone
 user_pref("gfx.webrender.compositor.force-enabled", false); // ERROR: DO NOT ENABLE IT, IT WILL MAKE YOUR TAB FLICKERING
 user_pref("gfx.webrender.compositor", true); // def=false // TODO: add short description
 user_pref("gfx.webrender.enabled", true); // def=false // TODO: add short description
@@ -293,13 +280,14 @@ user_pref("widget.wayland-dmabuf-vaapi.enabled", true); // def=HIDDEN PREF // NO
 user_pref("widget.wayland-dmabuf-webgl.enabled", true); // def=HIDDEN PREF // NOTE: turn on FFmpegDataDecoder. For display server based on Wayland
 
 user_pref("layers.gpu-process.enabled", true); // def=false // WARN: at best, it does nothing on Linux/MacOS
-user_pref("layers.gpu-process.force-enabled", false); // def=false // WARN: at best, it does nothing on Linux/MacOS, also force enabled could lead to breakage
-//user_pref("layers.mlgpu.enabled", true); // def=HIDDEN PREF // WARN: at best, it does nothing on Linux/MacOS
-//user_pref("media.hardware-video-decoding.enabled", true); // def=true // WARN: at best, it does nothing on Linux/MacOS
+user_pref("layers.gpu-process.force-enabled", true); // def=false // WARN: at best, it does nothing on Linux/MacOS, also force enabled could lead to breakage
+user_pref("layers.mlgpu.enabled", true); // def=HIDDEN PREF // WARN: at best, it does nothing on Linux/MacOS
+user_pref("media.hardware-video-decoding.enabled", true); // def=true // WARN: at best, it does nothing on Linux/MacOS
 user_pref("media.hardware-video-decoding.force-enabled", false); // def=false // WARN: at best, it does nothing on Linux/MacOS, also force enabled could lead to breakage
-//user_pref("media.gpu-process-decoder", true); // def=true [WINDOWS] // WARN: at best, it does nothing on Linux/MacOS
-//user_pref("media.ffmpeg.vaapi.enabled", true); // def=HIDDEN PREF // WARN: at best, it does nothing on Linux/MacOS
-// user_pref("layers.acceleration.force-enabled", false); // Prevent forcing OpenGL to be used rendering, this is software and NOT recommended
+user_pref("media.gpu-process-decoder", true); // def=true [WINDOWS] // WARN: at best, it does nothing on Linux/MacOS
+user_pref("media.ffmpeg.vaapi.enabled", true); // def=HIDDEN PREF // WARN: at best, it does nothing on Linux/MacOS
+user_pref("layers.acceleration.disabled", false); // def=false // enable hardware acceleration
+user_pref("layers.acceleration.force-enabled", true); // def=false // ERROR: It's proven to use GPU to render. If not force enabled, Flatpak will be very slow!
 
 user_pref("network.dnsCacheEntries", 20000); // def=400 // NOTE: more cache entries means faster connection
 //user_pref("network.dnsCacheExpiration", 3600); // def=60 // NOTE: cache lives longer means minimize re-caching
@@ -317,16 +305,17 @@ user_pref("accessibility.force_disabled", 1); // WARN: might break physical impa
 user_pref("browser.contentblocking.introCount", 20); // def=HIDDEN PREF // NOTE: turn off Content Blocker Notification. Cre: https://support.mozilla.org/en-US/questions/1239183
 user_pref("browser.pagethumbnails.capturing_disabled", true); // def=HIDDEN PREF // NOTE: disable page thumbnail collection
 user_pref("browser.sessionhistory.max_total_viewers", 4); // def=-1 // NOTE: only remember 4 pages in Back-Forward cache
-user_pref("devtools.debugger.remote-enabled", true); // NOTE: it seems the browser force disable it since this is a session-only setting by design
+//user_pref("devtools.debugger.remote-enabled", true); // NOTE: it seems the browser force disable it since this is a session-only setting by design
+user_pref("browser.search.suggest.enabled", true); // I still like this feature thank you very much
+user_pref("browser.urlbar.quicksuggest.enabled", true); // I still like this feature thank you very much
+user_pref("browser.urlbar.groupLabels.enabled", true); // TODO: add short description
 user_pref("dom.popup_allowed_events", "click dblclick mousedown pointerdown"); // NOTE: limit events that can cause a pop-up
 user_pref("dom.security.https_only_mode_error_page_user_suggestions", true); // NOTE: Warn me before loading sites that don't support HTTPS when using Private Browsing windows
 user_pref("dom.security.https_only_mode_pbm", true); // NOTE: Enable HTTPS-Only mode in all Private Browsing mode
-//user_pref("geo.provider.use_geoclue", false); // def=false // TODO: add short description
-user_pref("geo.provider.network.url", "https://beacondb.net/v1/geolocate"); // def=Mozilla's // NOTE: https://github.com/yokoffing/Betterfox/issues/378
 user_pref("javascript.options.wasm", false); // WARN: might break online coding platforms, PWA, ...
 user_pref("media.peerconnection.ice.no_host", true); // protect your private IP even in TRUSTED scenarios after granting device access. // WARN: might break video-conferencing platforms
 user_pref("network.http.referer.XOriginPolicy", 1); // 0=alawys (def), 1=only if base domains match (chosen), 2=only if hosts match. // WARN: control when to send a cross-origin referer, might cause breakage if 1 or 2 is chosen
-user_pref("permissions.memory_only", true); // def=false // NOTE: prevent permissions manager from writing to disk
+user_pref("permissions.memory_only", false); // def=HIDDEN // CAUTION: if not specified or set to true, LibreWolf won't persist permissions after restart, and Cookies exception list is actually a permission list => exceptions aren't persisted either
 user_pref("privacy.resistFingerprinting.letterboxing", false); // def=false // ERROR: UI cropped, not worth it so it must stay disabled
 user_pref("privacy.resistFingerprinting.pbmode", true); // enable RFP in Private Browsing
 user_pref("privacy.spoof_english", 2); // enabled RFP spoof english prompt
@@ -344,6 +333,7 @@ user_pref("privacy.clearOnShutdown_v2.browsingHistoryAndDownloads", false); // E
 user_pref("privacy.clearOnShutdown_v2.cookiesAndStorage", false); // ERROR: DO NOT DELETE cookies and site data
 user_pref("privacy.clearOnShutdown_v2.formdata", true); // WARN: delete form data on shutdown
 user_pref("privacy.clearOnShutdown_v2.historyFormDataAndDownloads", true); // WARN: delete history form data and downloads on shutdown
+// user_pref("privacy.clearOnShutdown.offlineApps", false); // TODO: add short description
 
 // Enable Google Safe Browsing
 // Cre: https://librewolf.net/docs/settings/#enable-google-safe-browsing
@@ -400,7 +390,10 @@ user_pref("dom.ipc.processCount", 8); // determine by number of CPU cores/proces
 //user_pref("security.sandbox.content.level", 0); // def=4 // NOTE: set to 0 if experiencing page crash
 
 /** PESKYFOX ***/
-user_pref("browser.startup.homepage","https://github.com/users/Silverbullet069/projects/1"); //  The first thing I want to see is my Kanban board
+user_pref(
+  "browser.startup.homepage",
+  "https://github.com/users/Silverbullet069/projects/1"
+); //  The first thing I want to see is my Kanban board
 //user_pref("accessibility.typeaheadfind", false); // disable searching for text when start typing. NOTE: if on it could overwrite site-specific keyboard shortcut
 //user_pref("browser.chrome.site_icons", true); // DO NOT DISABLE if you want to lose favicons in history, bookmarks AND TAB BAR
 //user_pref("browser.menu.showViewImageInfo", true); // turn on "View Image Info" when right-click an image
@@ -408,10 +401,6 @@ user_pref("browser.startup.homepage","https://github.com/users/Silverbullet069/p
 //user_pref("browser.preferences.moreFromMozilla", false);
 //user_pref("browser.uitour.enabled", false); // disable UITour backend, no chance that a remote page can use it
 //user_pref("browser.urlbar.suggest.calculator", true); // enable FF built-in calculator
-//user_pref("cookiebanners.bannerClicking.enabled", true);
-//user_pref("cookiebanners.cookieInjector.enabled", true);
-//user_pref("cookiebanners.service.mode.privateBrowsing", 2);
-//user_pref("cookiebanners.service.mode", 2);
 //user_pref("permissions.default.desktop-notification", 2); // block new requests asking to allow notifications
 //user_pref("prompts.defaultModalType", 3); // set prompts to be Window Modal
 user_pref("browser.bookmarks.showMobileBookmarks", false); // declutter bookmarks folder
@@ -425,6 +414,7 @@ user_pref("browser.library.activity-stream.enabled", false); // turn off Library
 user_pref("browser.newtabpage.activity-stream.feeds.snippets", false); // turn off Snippets (Updates from Mozilla and Firefox)
 user_pref("browser.newtabpage.activity-stream.feeds.topsites", true); // enable Top Sites in New Tab
 user_pref("browser.newtabpage.activity-stream.topSitesRows", 2); // show Top Sites in 2 rows
+user_pref("browser.newtabpage.activity-stream.showWeather", false); // disable Weather Forecast
 user_pref("browser.search.suggest.enabled.private", true); // only enable if you are using a privacy-respecting search engine (e.g. DuckDuckGo)
 user_pref("browser.sessionstore.max_tabs_undo", 25); // set number of saved closed tabs
 user_pref("browser.sessionstore.max_tabs_undo", 50); // set the amount of "Undo Closed Tabs" in Session Restore
@@ -438,21 +428,26 @@ user_pref("browser.tabs.searchclipboardfor.middleclick", false); // disable midd
 user_pref("browser.toolbars.bookmarks.visibility", "always"); // always display Bookmark Toolbar
 user_pref("browser.uidensity", 1); // 0=normal mode, 1=compact mode (smallest), 2=touch mode (too large)
 user_pref("browser.uitour.url", ""); // disable UITour backend, no chance that a remote page can use it
-user_pref("browser.urlbar.maxRichResults", 10);
+user_pref("browser.urlbar.maxRichResults", 10); // minimize the # of search result on Address Bar
+user_pref("browser.urlbar.suggest.yelp", false); // why Yelp?
+user_pref("browser.urlbar.suggest.pocket", false); // no Pocket
 user_pref("browser.urlbar.yelp.featureGate", false); // disable urlbar suggestion for Yelp
 user_pref("clipboard.autocopy", false); // disable middle click paste (1)
-user_pref("cookiebanners.service.mode", 0); // disable for performance since I'm using Easylist Cookie on uBlock Origins
-user_pref("cookiebanners.service.mode.privateBrowsing", 0); // disable for performance since I'm using Easylist Cookie on uBlock Origins
+user_pref("cookiebanners.service.mode", 0); // 0=disable, 1=reject all, 2=reject all or fallback to accept all. // I choose 0 since uBlock Origins had this feature. But if you choose 1 or 2, read https://github.com/mozilla/cookie-banner-rules-list
+user_pref("cookiebanners.service.mode.privateBrowsing", 0); // 0=disable, 1=reject all, 2=reject all or fallback to accept all. // I choose 0 since uBlock Origins had this feature. But if you choose 1 or 2, read https://github.com/mozilla/cookie-banner-rules-list
+//user_pref("cookiebanners.bannerClicking.enabled", true);
+//user_pref("cookiebanners.cookieInjector.enabled", true);
 user_pref("devtools.accessibility.enabled", false); // removes un-needed "Inspect Accessibility Properties" on right-click
 user_pref("devtools.debugger.prompt-connection", false); // hide popup dialog when opening Browser Toolbox
 user_pref("devtools.toolbox.zoomValue", 1); // change default DevTools zoom level
 user_pref("extensions.allowPrivateBrowsingByDefault", true); // allow ALL extensions to run in Private Browsing
-user_pref("identity.fxaccounts.enabled", true); // enable Firefox Sync
+user_pref("identity.fxaccounts.enabled", false); // disable Firefox Sync
 user_pref("middlemouse.paste", false); // disable middle click paste (2)
 user_pref("services.sync.prefs.sync.browser.uiCustomization.state", true); // turn on UI customizations sync
-user_pref("signon.autofillForms", false); // unselect "Autofill logins and passwords" for clean UI, I have BitWarned covered that
-user_pref("signon.firefoxRelay.feature", ""); // unselect suggestions from Firefox Relay for clean UI
-user_pref("signon.generation.enabled", false); // unselect "Suggest and generate strong passwords" for clean UI, I have BitWarden covered that
+user_pref("signon.rememberSignons", false); // unselect "Privacy & Security > Passwords > Ask to save passwords" // NOTE: replaced by Bitwarden
+user_pref("signon.autofillForms", false); // select "Privacy & Security > Passwords > Fill usernames and password automatically" // NOTE: replaced by Bitwarden
+user_pref("signon.generation.enabled", false); // unselect "Privacy & Security > Passwords > Suggest and generate strong passwords" // NOTE: replaced by Bitwarden
+user_pref("signon.firefoxRelay.feature", ""); // unselect suggestions from Firefox Relay
 user_pref("ui.key.menuAccessKey", 0); // 0=disable, 17=ctrl, 18=alt, 91=win, 224=meta (Command key on Mac)
 user_pref("ui.key.menuAccessKeyFocuses", false); // disable Alt key
 
