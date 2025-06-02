@@ -10,7 +10,7 @@
 /****************************************************************************
  * Betterfox                                                                *
  * "Ad meliora"                                                             *
- * version: 135                                                             *
+ * version: 138                                                             *
  * url: https://github.com/yokoffing/Betterfox                              *
  * contributor: Silverbullet069                                             *
  * created: 2025-04-08                                                      *
@@ -40,6 +40,9 @@ user_pref("gfx.content.skia-font-cache-size", 20);
 /** DISK CACHE ***/
 user_pref("browser.cache.disk.enable", false);
 
+/** MEMORY CACHE **/
+user_pref("browser.sessionhistory.max_total_viewers", 4);
+
 /** MEDIA CACHE ***/
 user_pref("media.memory_cache_max_size", 65536);
 user_pref("media.cache_readahead_limit", 7200);
@@ -57,8 +60,11 @@ user_pref("network.dnsCacheExpiration", 3600);
 user_pref("network.ssl_tokens_cache_capacity", 10240);
 
 /** SPECULATIVE LOADING ***/
+user_pref("network.http.speculative-parallel-limit", 0); // If higher than 0, Firefox will setup background TCP connections to server, in prediction of the user using the page => don't have to wait the TCP + SSL handshake
 user_pref("network.dns.disablePrefetch", true);
 user_pref("network.dns.disablePrefetchFromHTTPS", true);
+user_pref("browser.urlbar.speculativeConnect.enabled", false);
+user_pref("browser.places.speculativeConnect.enabled", false);
 user_pref("network.prefetch-next", false);
 user_pref("network.predictor.enabled", false);
 user_pref("network.predictor.enable-prefetch", false);
@@ -78,6 +84,7 @@ user_pref("privacy.globalprivacycontrol.enabled", true);
 
 /** OCSP & CERTS / HPKP ***/
 user_pref("security.OCSP.enabled", 0);
+user_pref("security.remote_settings.crlite_filters.enabled", true);
 user_pref("security.pki.crlite_mode", 2);
 
 /** SSL / TLS ***/
@@ -133,6 +140,7 @@ user_pref("geo.provider.use_geoclue", true); // def=false // NOTE: only allow Fi
 user_pref("geo.provider.network.url", "https://beacondb.net/v1/geolocate"); // def=Mozilla's // NOTE: https://github.com/yokoffing/Betterfox/issues/378
 user_pref("browser.search.update", false);
 user_pref("permissions.manager.defaultsUrl", "");
+user_pref("extensions.getAddons.cache.enabled", false);
 
 /** TELEMETRY ***/
 user_pref("datareporting.policy.dataSubmissionEnabled", false);
@@ -151,6 +159,7 @@ user_pref("toolkit.coverage.opt-out", true);
 user_pref("toolkit.coverage.endpoint.base", "");
 user_pref("browser.newtabpage.activity-stream.feeds.telemetry", false);
 user_pref("browser.newtabpage.activity-stream.telemetry", false);
+user_pref("datareporting.usage.uploadEnabled", false);
 
 /** EXPERIMENTS ***/
 user_pref("app.shield.optoutstudies.enabled", false);
@@ -175,14 +184,8 @@ user_pref("extensions.getAddons.showPane", false);
 user_pref("extensions.htmlaboutaddons.recommendations.enabled", false);
 user_pref("browser.discovery.enabled", false);
 user_pref("browser.shell.checkDefaultBrowser", false);
-user_pref(
-  "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons",
-  false
-);
-user_pref(
-  "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features",
-  false
-);
+user_pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons", false);
+user_pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features", false);
 user_pref("browser.preferences.moreFromMozilla", false);
 user_pref("browser.aboutConfig.showWarning", false);
 user_pref("browser.aboutwelcome.enabled", false);
@@ -209,7 +212,10 @@ user_pref("browser.urlbar.trending.featureGate", false);
 user_pref("dom.text_fragments.create_text_fragment.enabled", true);
 
 /** NEW TAB PAGE ***/
+user_pref("browser.newtabpage.activity-stream.default.sites", "");
+user_pref("browser.newtabpage.activity-stream.showSponsoredTopSites", false);
 user_pref("browser.newtabpage.activity-stream.feeds.section.topstories", false);
+user_pref("browser.newtabpage.activity-stream.showSponsored", false);
 
 /** POCKET ***/
 user_pref("extensions.pocket.enabled", false);
@@ -304,7 +310,6 @@ user_pref("network.trr.max-fails", 5); // def=15 // NOTE: fail fast means fallba
 user_pref("accessibility.force_disabled", 1); // WARN: might break physical imparment assistive software
 user_pref("browser.contentblocking.introCount", 20); // def=HIDDEN PREF // NOTE: turn off Content Blocker Notification. Cre: https://support.mozilla.org/en-US/questions/1239183
 user_pref("browser.pagethumbnails.capturing_disabled", true); // def=HIDDEN PREF // NOTE: disable page thumbnail collection
-user_pref("browser.sessionhistory.max_total_viewers", 4); // def=-1 // NOTE: only remember 4 pages in Back-Forward cache
 //user_pref("devtools.debugger.remote-enabled", true); // NOTE: it seems the browser force disable it since this is a session-only setting by design
 user_pref("browser.search.suggest.enabled", true); // I still like this feature thank you very much
 user_pref("browser.urlbar.quicksuggest.enabled", true); // I still like this feature thank you very much
